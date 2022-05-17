@@ -1,0 +1,39 @@
+﻿@model List<StartSurveyViewModel>
+
+@{
+    ViewData["Title"] = "Simple Survey";
+    var UserId = ViewBag.UserId;
+    var UserName = ViewBag.UserName;
+}
+
+
+
+<form method="post" asp-action="StartSurvey">
+    <div class="card">
+        <div class="card-header">
+            <h1>Welcome @UserName, let's start simple survey</h1>
+        </div>
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            <input type="hidden" asp-for="@Model[i].QuestionId" />
+            <input type="hidden" asp-for="@Model[i].QuestionText" />
+            <div class="card-body">
+                <label>@Model[i].QuestionText</label> <br />
+                @for (int j = 0; j < Model[i].Options.Count; j++)
+                {
+                    <input class="custom-radio" type="radio" asp-for="@Model[i].OptionId" value="@Model[i].Options[j].Id" />
+                    <label>@Model[i].Options[j].Text</label> <br />
+                }
+                <span asp-validation-for="@Model[i].OptionId" class="text-danger"></span>
+            </div>
+            <hr />
+        }
+        <div class="card-footer">
+            <input type="submit" value="Finish" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

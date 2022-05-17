@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Question>
+
+@{
+    ViewData["Title"] = "All Questions";
+}
+
+<h1>All Questions</h1>
+
+<p>
+    <a asp-action="CreateQuestion">Create New Question</a>
+</p>
+
+@foreach (var question in Model)
+{
+    <div class="card mt-3">
+        <div class="card-header"><h3>@question.Text</h3></div>
+        <div class="card-body">
+            <ul class="list-inline">
+                @foreach (var option in question.Options)
+                {
+
+                    <li class="list-inline-item mr-4">
+                        @option.Text
+                        <br />
+                        <a asp-action="EditOption" asp-route-id="@option.Id">Edit</a> |
+                        <a asp-action="DeleteOption" asp-route-id="@option.Id">Delete</a>
+                    </li>
+                }
+            </ul>
+            <div><a asp-action="CreateOption" asp-route-id="@question.Id">Add another Option</a></div>
+        </div>
+        <div class="card-footer">
+            <a asp-action="EditQuestion" asp-route-id="@question.Id" class="btn btn-primary">Edit</a>
+            <a asp-action="DeleteQuestion" asp-route-id="@question.Id" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+}

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<User>
+@inject ISurveyRepository surveyRepository;
+@{
+    ViewData["Title"] = "Users Answers";
+}
+
+<h1>The answers of all users</h1>
+@foreach (var user in Model)
+{
+    <div class="card mb-3">
+        <div class="card-header"><h3 class="card-title">@user.Name</h3></div>
+        <div class="card-body">
+            <table class="table table-info">
+                <thead>
+                    <tr>
+                        <th>Question</th>
+                        <th>Answer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in user.userAnswers)
+                    {
+                        <tr>
+                            <td>@surveyRepository.GetQuestion(item.QuestionId).Text</td>
+                            <td>@surveyRepository.GetOption(item.OptionId).Text</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <hr />
+    </div>
+}
+
+

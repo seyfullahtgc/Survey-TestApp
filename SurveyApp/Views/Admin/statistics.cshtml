@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Question>
+
+@{
+    ViewData["Title"] = "statistics";
+}
+
+<h1>Statistics</h1>
+@foreach (var question in Model)
+{
+    <div class="mt-3">
+        <table class="table table-info text-center">
+            <tbody>
+                <tr>
+                    <td class="font-weight-bolder">@question.Text</td>
+                    @foreach (var option in question.Options)
+                    {
+                        <td>@option.Text</td>
+                    }
+                </tr>
+                <tr>
+                    <td class="font-weight-bolder">Number of users who chose this option</td>
+                    @foreach (var option in question.Options)
+                    {
+                        <td>@option.userAnswers.Count</td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+}
